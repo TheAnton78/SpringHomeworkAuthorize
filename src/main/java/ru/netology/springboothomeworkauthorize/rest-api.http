@@ -1,0 +1,12 @@
+GET http://localhost:8085/authorize?user=&password=
+Accept: application/json
+
+###
+GET http://localhost:8085/addUser?user=petya&password=89194691065&authority=delete
+Accept: application/json
+
+###
+GET http://localhost:8085/addUser?user=petya&password=89194691065&authority=write
+Accept: application/json
+
+###
