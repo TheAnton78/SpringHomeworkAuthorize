@@ -1,8 +1,8 @@
-GET http://localhost:8085/authorize?user=&password=
+GET http://localhost:8085/authorize?user=e&password=qe33eq
 Accept: application/json
 
 ###
-GET http://localhost:8085/addUser?user=petya&password=89194691065&authority=delete
+GET http://localhost:8085/addUser?user=e&password=qe33eq&authority=delete
 Accept: application/json
 
 ###

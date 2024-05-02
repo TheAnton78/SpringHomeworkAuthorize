@@ -1,9 +1,12 @@
 package ru.netology.springboothomeworkauthorize.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.netology.springboothomeworkauthorize.domain.Account;
 import ru.netology.springboothomeworkauthorize.enums.Authorities;
 import ru.netology.springboothomeworkauthorize.service.AuthorizationService;
 
@@ -17,15 +20,17 @@ public class AuthorizationController {
         this.service = service;
     }
 
+
+
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
-        return service.getAuthorities(user, password);
+    public List<Authorities> getAuthorities(@Valid Account user) {
+        return service.getAuthorities(user);
     }
 
+
     @GetMapping("/addUser")
-    public List<Authorities> addUser(@RequestParam("user") String user, @RequestParam("password") String password,
-                                     @RequestParam("authority") String authority){
-        return service.addUser(user, password, authority);
+    public List<Authorities> addUser(@Valid Account user, @RequestParam("authority") Authorities authorities){
+        return service.addUser(user, authorities);
     }
 
 

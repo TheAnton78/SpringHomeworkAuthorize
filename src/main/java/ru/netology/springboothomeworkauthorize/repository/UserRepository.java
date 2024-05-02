@@ -1,6 +1,7 @@
 package ru.netology.springboothomeworkauthorize.repository;
 
 import org.springframework.stereotype.Repository;
+import ru.netology.springboothomeworkauthorize.domain.Account;
 import ru.netology.springboothomeworkauthorize.enums.Authorities;
 
 import java.util.ArrayList;
@@ -10,37 +11,31 @@ import java.util.Map;
 
 @Repository
 public class UserRepository {
-    private Map<String, String> repository = new HashMap<>();
-    private Map<String, List<Authorities>> authoritiesRepository = new HashMap<>();
+    private Map<Account, List<Authorities>> authoritiesRepository = new HashMap<>();
 
-    public List<Authorities> getUserAuthorities(String user, String password) {
+    public List<Authorities> getUserAuthorities(Account user) {
         List<Authorities> result = new ArrayList<>();
-        if(repository.containsKey(user)){
-            if(repository.get(user).equals(password)){
+        if(authoritiesRepository.containsKey(user)){
+            if(authoritiesRepository.keySet().stream().filter(x -> x.equals(user)).findFirst()
+                    .get().getPassword().equals(user.getPassword())){
                 result.addAll(authoritiesRepository.get(user));
             }
         }
         return result;
     }
 
-    public boolean addUser(String user, String password, String authoritie){
-        if(repository.containsKey(user)){
-            return authoritiesRepository.get(user).add(convertAuthorities(authoritie));
+    public boolean addUser(Account user, Authorities authority){
+        if(authoritiesRepository.containsKey(user)){
+            if(!authoritiesRepository.get(user).contains(authority)){
+                return authoritiesRepository.get(user).add(authority);
+            }
+            return true;
         }else{
             List<Authorities> list = new ArrayList<>();
-            list.add(convertAuthorities(authoritie));
-            repository.put(user, password);
+            list.add(authority);
             authoritiesRepository.put(user, list);
             return true;
         }
     }
 
-    private Authorities convertAuthorities(String authoritie){
-        return switch (authoritie.toUpperCase()) {
-            case "READ" -> Authorities.READ;
-            case "WRITE" -> Authorities.WRITE;
-            case "DELETE" -> Authorities.DELETE;
-            default -> null;
-        };
-    }
 }

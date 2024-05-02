@@ -1,6 +1,7 @@
 package ru.netology.springboothomeworkauthorize.service;
 
 import org.springframework.stereotype.Service;
+import ru.netology.springboothomeworkauthorize.domain.Account;
 import ru.netology.springboothomeworkauthorize.enums.Authorities;
 import ru.netology.springboothomeworkauthorize.exceptions.InvalidCredentials;
 import ru.netology.springboothomeworkauthorize.exceptions.UnauthorizedUser;
@@ -16,20 +17,20 @@ public class AuthorizationService {
         this.userRepository = userRepository;
     }
 
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
+    public List<Authorities> getAuthorities(Account user) {
+        if (isEmpty(user.getUser()) || isEmpty(user.getPassword())) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user);
         if (isEmpty(userAuthorities)) {
             throw new UnauthorizedUser("Unknown user " + user);
         }
         return userAuthorities;
     }
 
-    public List<Authorities> addUser(String user, String password, String authoritie){
-        if (userRepository.addUser(user, password, authoritie)){
-            return getAuthorities(user, password);
+    public List<Authorities> addUser(Account user, Authorities authority){
+        if (userRepository.addUser(user, authority)){
+            return getAuthorities(user);
         }else{
             throw new UnauthorizedUser("Unknown user " + user);
         }
