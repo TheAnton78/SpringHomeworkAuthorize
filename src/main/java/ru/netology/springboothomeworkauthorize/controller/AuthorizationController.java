@@ -20,7 +20,10 @@ public class AuthorizationController {
         this.service = service;
     }
 
-
+    @GetMapping("/")
+    public String getStatus(@Valid Account user) {
+        return "App is ready!";
+    }
 
     @GetMapping("/authorize")
     public List<Authorities> getAuthorities(@Valid Account user) {
