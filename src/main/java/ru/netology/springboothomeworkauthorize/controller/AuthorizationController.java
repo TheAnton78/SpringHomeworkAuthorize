@@ -1,6 +1,5 @@
 package ru.netology.springboothomeworkauthorize.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +9,7 @@ import ru.netology.springboothomeworkauthorize.domain.Account;
 import ru.netology.springboothomeworkauthorize.enums.Authorities;
 import ru.netology.springboothomeworkauthorize.service.AuthorizationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController

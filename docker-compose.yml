@@ -1,0 +1,10 @@
+version: '1'
+
+services:
+  app1:
+    image: 'myapp:1.0'
+
+    build: ./
+
+    ports:
+      - '8085:8085'
